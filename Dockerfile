@@ -287,8 +287,7 @@ RUN installGithub.r \
 RUN echo '\n \
   \n# infinite loop for container never stop \
   \ntail -f /dev/null' >> /home/boot.sh \
-  && chmod 777 /home/boot.sh \
-  && sh /home/add_user.sh mcanouil mcanouil 2705
+  && chmod 777 /home/boot.sh
 
 
 EXPOSE 8787
