@@ -1,6 +1,5 @@
 FROM library/debian
 
-
 ENV R_BASE_VERSION=3.5.1
 ENV BIOCONDUCTOR_VERSION=3.8
 ENV RSTUDIO_VERSION=1.1.456
@@ -13,9 +12,7 @@ COPY add_user.sh /home/add_user.sh
 
 ### Install linux libraries
 RUN echo '* hard core 0' >> /etc/security/limits.conf \
-  && echo 'deb http://http.debian.net/debian sid main' > /etc/apt/sources.list.d/debian-unstable.list \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends locales \
+  && apt-get update && apt-get install -y --no-install-recommends apt-utils texlive-full locales \
   && sed -i '/^#.* en_US.* /s/^#//' /etc/locale.gen \
   && sed -i '/^#.* en_GB.* /s/^#//' /etc/locale.gen \
   && locale-gen \
@@ -34,8 +31,15 @@ RUN echo '* hard core 0' >> /etc/security/limits.conf \
   && export LC_MEASUREMENT="en_GB.UTF-8" \
   && export LC_IDENTIFICATION="en_GB.UTF-8" \
   && export LC_ALL="en_GB.UTF-8" \
-  && apt-get install -y --no-install-recommends \
-    apt-utils  \
+  && echo 'deb http://http.debian.net/debian sid main' > /etc/apt/sources.list.d/debian-unstable.list \
+  && apt-get update && apt-get install -y --no-install-recommends \
+    sudo \
+    wget \
+    file \
+    git \
+    curl \
+    htop \
+    nano \
     libxml2-dev \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -43,30 +47,21 @@ RUN echo '* hard core 0' >> /etc/security/limits.conf \
     libudunits2-dev \
     libgdal-dev \
     imagemagick \
-    libmagick++-dev \
-    cargo \
     libv8-3.14-dev \
     libgit2-dev \
     libssh2-1-dev \
-    curl \
-    htop \
-    nano \
-    texlive-full \
     default-jdk \
     libmariadb-client-lgpl-dev \
     libsasl2-dev \
-    file \
-    git \
     libapparmor1 \
     libedit2 \
     lsb-release \
     psmisc \
     python-setuptools \
-    sudo \
-    wget \
     multiarch-support \
     ffmpeg \
-    libavfilter-dev
+    libavfilter-dev \
+    cargo
 
 
 ### Install R
@@ -293,4 +288,4 @@ RUN echo '\n \
 EXPOSE 8787
 
 
-CMD ["./home/boot.sh"]
+CMD ["sh /home/boot.sh"]
