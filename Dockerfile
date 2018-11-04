@@ -170,6 +170,7 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
 RUN R -e " \
     install.packages( \
       c('udunits2', 'units', 'devtools'), \
+      quiet = TRUE, \
       configure.args = '--with-udunits2-lib=/usr/local/lib' \
     );" \
   && install.r \
