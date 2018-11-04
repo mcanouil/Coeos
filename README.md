@@ -1,4 +1,4 @@
-# Docker
+# Coeos
 
 My own Docker image
 
