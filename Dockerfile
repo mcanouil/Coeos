@@ -3,6 +3,7 @@ FROM library/debian
 ENV R_BASE_VERSION=3.5.1
 ENV BIOCONDUCTOR_VERSION=3.8
 ENV RSTUDIO_VERSION=1.1.456
+ENV SHINY_VERSION=1.5.9.923
 
 
 COPY login.html /etc/rstudio/login.html
