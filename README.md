@@ -1,9 +1,8 @@
 # Coeos
 
-My own Docker image
+My own Docker image.
 
-1. `docker login`
-2. `docker build --tag mcanouil/coeos:X.X.X --compress`
-3. `docker push mcanouil/coeos:X.X.X`
-4. `docker system prune --all --force`
-5. `docker logout`
+* R 3.5.1
+* Rstudio Server 1.1.456
+* Shiny server 1.5.9.923
+* Bioconductor 3.8
