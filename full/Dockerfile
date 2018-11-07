@@ -15,9 +15,7 @@ RUN R -e " \
     viridis \
     readxl \
     writexl \
-    cowplot \
     qdap \
-    tableone \
     Hmisc \
     kableExtra \
     ggrepel \
@@ -29,6 +27,9 @@ RUN R -e " \
     ggdendro \
     ggExtra \
     ggpubr \
+    ggbeeswarm \
+    ggraph \
+    ggpmisc \
     caTools \
     devtools \
     styler \
@@ -39,40 +40,15 @@ RUN R -e " \
     pwr \
     glmnet \
     reshape \
-    survminer \
-    MiST \
-    kinship2 \
-    glmmTMB \
-    pscl \
-    pedigree \
-    pedigreemm \
-    coxme \
-    MatchIt \
-    VennDiagram \
-    DescTools \
-    DiagrammeR \
     git2r \
     bookdown \
-    ggbeeswarm \
-    RcppArmadillo \
-    bigmemory \
     DBI \
     RMariaDB \
     mongolite \
     officer \
-    meta \
-    factoextra \
-    JM \
-    relaimpo \
-    ggraph \
-    ggpmisc \
-    SimDesign \
     av \
     remotes \
-    missMDA \
-    RefFreeEWAS \
     pryr \
-    microbenchmark \
     odbc\
     roxygen2 \
     shinydashboard \
