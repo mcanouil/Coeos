@@ -19,17 +19,8 @@ RUN R -e " \
     Hmisc \
     kableExtra \
     ggrepel \
-    ggsignif \
-    ggthemes \
-    ggnetwork \
-    ggridges \
     qqplotr \
-    ggdendro \
-    ggExtra \
     ggpubr \
-    ggbeeswarm \
-    ggraph \
-    ggpmisc \
     caTools \
     devtools \
     styler \
@@ -37,21 +28,17 @@ RUN R -e " \
     benchr \
     gifski \
     DT \
-    pwr \
-    glmnet \
-    reshape \
     git2r \
     bookdown \
     DBI \
+    odbc\
     RMariaDB \
     mongolite \
     officer \
     av \
     remotes \
     pryr \
-    odbc\
     roxygen2 \
-    shinydashboard \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
   
 
