@@ -21,7 +21,6 @@ RUN R -e " \
     ggrepel \
     qqplotr \
     ggpubr \
-    caTools \
     styler \
     conflicted \
     benchr \
@@ -29,11 +28,6 @@ RUN R -e " \
     DT \
     git2r \
     bookdown \
-    DBI \
-    odbc\
-    RMariaDB \
-    mongolite \
-    officer \
     av \
     remotes \
     pryr \
