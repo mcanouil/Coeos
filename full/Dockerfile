@@ -22,7 +22,6 @@ RUN R -e " \
     qqplotr \
     ggpubr \
     caTools \
-    devtools \
     styler \
     conflicted \
     benchr \
