@@ -186,9 +186,9 @@ RUN R -e " \
     thomasp85/transformr \
     thomasp85/gganimate \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
+  && rm -rf /var/lib/apt/lists/ \
   && apt-get clean \
-  && apt-get autoremove \
-  && rm -rf /var/lib/apt/lists/
+  && apt-get autoremove -y
 
 
 ### Install Bioconductor packages
