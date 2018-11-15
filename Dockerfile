@@ -169,12 +169,14 @@ RUN echo '\n \
   
 ### Install R packages
 RUN R -e " \
-    install.packages(pkgs = c( \
-      'udunits2', 'units', 'devtools', 'tidyverse', 'shiny', 'readxl', 'writexl', \
-      'qdap', 'Hmisc', 'kableExtra', 'ggrepel', 'ggpubr', 'styler', 'conflicted', \
-      'benchr', 'gifski', 'DT', 'bookdown', 'av', 'remotes', 'pryr', 'roxygen2' \
+    install.packages( \
+      pkgs = c( \
+        'udunits2', 'units', 'devtools', 'tidyverse', 'shiny', 'readxl', 'writexl', \
+        'qdap', 'Hmisc', 'kableExtra', 'ggrepel', 'ggpubr', 'styler', 'conflicted', \
+        'benchr', 'gifski', 'DT', 'bookdown', 'av', 'remotes', 'pryr', 'roxygen2' \
       ), \
       quiet = TRUE, \
+      Ncpus = min(parallel::detectCores(), 5), \
       configure.args = '--with-udunits2-lib=/usr/local/lib' \
     );" \
   && installGithub.r \
