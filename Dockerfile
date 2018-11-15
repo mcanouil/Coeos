@@ -48,7 +48,6 @@ RUN echo '* hard core 0' >> /etc/security/limits.conf \
     libcairo2-dev \
     libudunits2-dev \
     libgdal-dev \
-    imagemagick \
     libv8-3.14-dev \
     libgit2-dev \
     libssh2-1-dev \
