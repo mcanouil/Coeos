@@ -13,7 +13,8 @@ COPY add_user.sh /home/add_user.sh
 
 ### Install linux libraries
 RUN echo '* hard core 0' >> /etc/security/limits.conf \
-  && apt-get update && apt-get install -y --no-install-recommends apt-utils texlive-full locales \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends apt-utils texlive-full locales \
   && sed -i '/^#.* en_US.* /s/^#//' /etc/locale.gen \
   && sed -i '/^#.* en_GB.* /s/^#//' /etc/locale.gen \
   && locale-gen \
@@ -33,7 +34,7 @@ RUN echo '* hard core 0' >> /etc/security/limits.conf \
   && export LC_IDENTIFICATION="en_GB.UTF-8" \
   && export LC_ALL="en_GB.UTF-8" \
   && echo 'deb http://http.debian.net/debian sid main' > /etc/apt/sources.list.d/debian-unstable.list \
-  && apt-get update && apt-get install -y --no-install-recommends \
+  && apt-get install -y --no-install-recommends \
     sudo \
     wget \
     file \
@@ -66,8 +67,7 @@ RUN echo '* hard core 0' >> /etc/security/limits.conf \
 
 
 ### Install R
-RUN apt-get update \
-  && apt-get install -t unstable -y --no-install-recommends \
+RUN apt-get install -t unstable -y --no-install-recommends \
     littler \
     r-cran-littler \
     r-cran-stringr \
@@ -110,8 +110,6 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
   && echo '#!/bin/bash \
   \nrstudio-server stop' > /etc/services.d/rstudio/finish \
   && echo 'auth-login-page-html=/etc/rstudio/login.html' >> /etc/rstudio/rserver.conf \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/ \
   && addgroup rstudio-server staff \
   && usermod -g staff rstudio-server \
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
@@ -125,8 +123,7 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
 
 
 ### Install shiny-server
-# RUN apt-get update \
-  # && apt-get install -y --no-install-recommends gdebi \
+# RUN apt-get install -y --no-install-recommends gdebi \
   ## && wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-14.04/x86_64/VERSION -O "version.txt" \
   ## && VERSION=$(cat version.txt) \
   # && wget --no-verbose "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-14.04/x86_64/shiny-server-$SHINY_VERSION-amd64.deb" -O ss-latest.deb \
@@ -157,7 +154,6 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
   # \nexport LC_MEASUREMENT="en_GB.UTF-8" \
   # \nexport LC_IDENTIFICATION="en_GB.UTF-8" \
   # \nexport LC_ALL="en_GB.UTF-8"' > /home/shiny/.bashrc \
-  # && apt-get clean && rm -rf /var/lib/apt/lists/ \
   # && echo '\n \
   # \n# Make sure the directory for individual app logs exists \
   # \nmkdir -p /var/log/shiny-server \
@@ -174,69 +170,31 @@ RUN echo '\n \
   
 ### Install R packages
 RUN R -e " \
-    install.packages( \
-      c('udunits2', 'units', 'devtools'), \
+    install.packages(pkgs = c( \
+      'udunits2', 'units', 'devtools', 'tidyverse', 'shiny', 'readxl', 'writexl', \
+      'qdap', 'Hmisc', 'kableExtra', 'ggrepel', 'ggpubr', 'styler', 'conflicted', \
+      'benchr', 'gifski', 'DT', 'bookdown', 'av', 'remotes', 'pryr', 'roxygen2' \
+      ), \
       quiet = TRUE, \
       configure.args = '--with-udunits2-lib=/usr/local/lib' \
     );" \
-  && install.r \
-    tidyverse \
-    shiny \
-    readxl \
-    writexl \
-    qdap \
-    Hmisc \
-    kableExtra \
-    ggrepel \
-    ggpubr \
-    styler \
-    conflicted \
-    benchr \
-    gifski \
-    DT \
-    bookdown \
-    av \
-    remotes \
-    pryr \
-    roxygen2 \
-  && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
-  
-
-### Install R packages from GitHub
-RUN installGithub.r \
-  gabraham/flashpca/flashpcaR \
-  dreamRs/prefixer \
-  thomasp85/tweenr \
-  thomasp85/transformr \
-  thomasp85/gganimate \
+  && installGithub.r \
+    gabraham/flashpca/flashpcaR \
+    dreamRs/prefixer \
+    thomasp85/tweenr \
+    thomasp85/transformr \
+    thomasp85/gganimate \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
   && apt-get clean \
+  && apt-get autoremove \
   && rm -rf /var/lib/apt/lists/
 
 
 ### Install Bioconductor packages
 # RUN install.r BiocManager \
-  # && R -e " \
-  # BiocManager::install(ask = FALSE, version = Sys.getenv('BIOCONDUCTOR_VERSION')); \
-    # BiocManager::install(c( \
-      # 'HDF5Array', \
-      # 'minfi', \
-      # 'ChAMP', \
-      # 'tximport', \
-      # 'DESeq2', \
-      # 'biomaRt', \
-      # 'NanoStringDiff', \ 
-      # 'ENmix', \
-      # 'hgu133plus2.db', \
-      # 'snpStats', \
-      # 'IlluminaHumanMethylationEPICanno.ilm10b2.hg19', \
-      # 'IlluminaHumanMethylationEPICanno.ilm10b3.hg19', \
-      # 'IlluminaHumanMethylationEPICanno.ilm10b4.hg19', \
-      # 'MafDb.gnomAD.r2.1.hs37d5', \
-      # 'FlowSorted.Blood.EPIC', \
-      # 'FlowSorted.CordBlood.450k' \
-    # ), ask = FALSE, update = TRUE);" \
-    # && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+  # && R -e "BiocManager::install(ask = FALSE, version = Sys.getenv('BIOCONDUCTOR_VERSION')); \
+    # BiocManager::install(c('snpStats'), ask = FALSE, update = TRUE);" \
+  # && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 
 EXPOSE 8787
