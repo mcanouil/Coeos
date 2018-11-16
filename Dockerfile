@@ -12,9 +12,8 @@ COPY add_user.sh /home/add_user.sh
 
 
 ### Install linux libraries
-RUN echo '* hard core 0' >> /etc/security/limits.conf \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends apt-utils texlive-full locales \
+RUN apt-get update \
+  && apt-get -qq install -y --no-install-recommends apt-utils texlive-full locales \
   && sed -i '/^#.* en_US.* /s/^#//' /etc/locale.gen \
   && sed -i '/^#.* en_GB.* /s/^#//' /etc/locale.gen \
   && locale-gen \
@@ -34,7 +33,7 @@ RUN echo '* hard core 0' >> /etc/security/limits.conf \
   && export LC_IDENTIFICATION="en_GB.UTF-8" \
   && export LC_ALL="en_GB.UTF-8" \
   && echo 'deb http://http.debian.net/debian sid main' > /etc/apt/sources.list.d/debian-unstable.list \
-  && apt-get install -y --no-install-recommends \
+  && apt-get -qq install -y --no-install-recommends \
     sudo \
     wget \
     file \
