@@ -167,34 +167,10 @@ RUN echo '\n \
   
   
 ### Install R packages
-RUN R -e " \
-    install.packages( \
-      pkgs = c( \
-        'udunits2', 'units', 'devtools', 'tidyverse', 'shiny', 'readxl', 'writexl', \
-        'qdap', 'Hmisc', 'kableExtra', 'ggrepel', 'ggpubr', 'styler', 'conflicted', \
-        'benchr', 'gifski', 'DT', 'bookdown', 'av', 'remotes', 'pryr', 'roxygen2' \
-      ), \
-      quiet = TRUE, \
-      Ncpus = min(parallel::detectCores(), 5), \
-      configure.args = '--with-udunits2-lib=/usr/local/lib' \
-    );" \
-  && installGithub.r \
-    gabraham/flashpca/flashpcaR \
-    dreamRs/prefixer \
-    thomasp85/tweenr \
-    thomasp85/transformr \
-    thomasp85/gganimate \
-  && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
-  && rm -rf /var/lib/apt/lists/ \
-  && apt-get clean \
-  && apt-get autoremove -y
+COPY packages.R /tmp/packages.R
+RUN Rscript /tmp/packages.R \
+  && rm -rf /tmp/*
 
-
-### Install Bioconductor packages
-# RUN install.r BiocManager \
-  # && R -e "BiocManager::install(ask = FALSE, version = Sys.getenv('BIOCONDUCTOR_VERSION')); \
-    # BiocManager::install(c('snpStats'), ask = FALSE, update = TRUE);" \
-  # && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 
 EXPOSE 8787
