@@ -9,6 +9,7 @@ ENV SHINY_VERSION=1.5.9.923
 COPY login.html /etc/rstudio/login.html
 COPY logo.png /usr/lib/rstudio-server/www/images/logo.png
 COPY add_user.sh /home/add_user.sh
+COPY bashrc /etc/bash.bashrc
 
 
 ### Install linux libraries
@@ -33,6 +34,7 @@ RUN apt-get update \
   && export LC_IDENTIFICATION="en_GB.UTF-8" \
   && export LC_ALL="en_GB.UTF-8" \
   && echo 'deb http://http.debian.net/debian sid main' > /etc/apt/sources.list.d/debian-unstable.list \
+  && apt-get update \
   && apt-get -qq install -y --no-install-recommends \
     sudo \
     wget \
