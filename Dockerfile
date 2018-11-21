@@ -36,36 +36,44 @@ RUN apt-get update \
   && apt-get -qq install -y --no-install-recommends \
     sudo \
     wget \
-    file \
-    git \
+    sudo \
     curl \
     htop \
     nano \
-    libxml2-dev \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libcairo2-dev \
-    libudunits2-dev \
-    libgdal-dev \
-    libv8-3.14-dev \
-    libgit2-dev \
-    libssh2-1-dev \
-    default-jdk \
-    libmariadb-client-lgpl-dev \
-    libsasl2-dev \
+    file \
+    git \
     libapparmor1 \
+    libcurl4-openssl-dev \
     libedit2 \
+    libssl-dev \
     lsb-release \
     psmisc \
+    procps \
     python-setuptools \
-    multiarch-support \
-    ffmpeg \
-    libavfilter-dev \
+    libudunits2-dev \
     r-base=${R_BASE_VERSION}-* \
     r-base-dev=${R_BASE_VERSION}-* \
     r-recommended=${R_BASE_VERSION}-* \
+    # libxml2-dev \
+    # libcurl4-openssl-dev \
+    # libssl-dev \
+    # libcairo2-dev \
+    # libgdal-dev \
+    # libv8-3.14-dev \
+    # libgit2-dev \
+    # libssh2-1-dev \
+    # default-jdk \
+    # libmariadb-client-lgpl-dev \
+    # libsasl2-dev \
+    # libapparmor1 \
+    # libedit2 \
+    # lsb-release \
+    # psmisc \
+    # python-setuptools \
+    # multiarch-support \
+    # ffmpeg \
+    # libavfilter-dev \
   && echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
-
 
 
 ### Install rstudio-server
@@ -78,6 +86,7 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
   && wget -q http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb \
   && dpkg -i rstudio-server-${RSTUDIO_VERSION}-amd64.deb \
   && rm rstudio-server-*-amd64.deb \
+  && apt-get clean \
   && ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin \
   && ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc-citeproc /usr/local/bin \
   && git clone https://github.com/jgm/pandoc-templates \
