@@ -61,23 +61,11 @@ RUN apt-get update \
     multiarch-support \
     ffmpeg \
     libavfilter-dev \
-    cargo
-
-
-### Install R
-RUN apt-get install -t unstable -y --no-install-recommends \
-    littler \
-    r-cran-littler \
-    r-cran-stringr \
     r-base=${R_BASE_VERSION}-* \
     r-base-dev=${R_BASE_VERSION}-* \
     r-recommended=${R_BASE_VERSION}-* \
   && echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
-  && echo 'source("/etc/R/Rprofile.site")' >> /etc/littler.r \
-  && ln -s /usr/lib/R/site-library/littler/examples/install.r /usr/local/bin/install.r \
-  && ln -s /usr/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-  && ln -s /usr/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-  && ln -s /usr/lib/R/site-library/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r
+
 
 
 ### Install rstudio-server
@@ -168,6 +156,7 @@ RUN echo '\n \
   
 ### Install R packages
 COPY packages.R /tmp/packages.R
+
 RUN Rscript /tmp/packages.R \
   && rm -rf /tmp/*
 
