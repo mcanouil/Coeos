@@ -13,74 +13,57 @@ COPY bashrc /etc/bash.bashrc
 
 
 ### Install linux libraries
-RUN apt-get update \
-  && apt-get -qq install -y --no-install-recommends apt-utils texlive-full locales \
-  && sed -i '/^#.* en_US.* /s/^#//' /etc/locale.gen \
-  && sed -i '/^#.* en_GB.* /s/^#//' /etc/locale.gen \
-  && locale-gen \
-  && export LANG="en_GB.UTF-8" \
-  && export LANGUAGE="en_GB.UTF-8" \
-  && export LC_CTYPE="en_GB.UTF-8" \
-  && export LC_NUMERIC="en_GB.UTF-8" \
-  && export LC_TIME="en_GB.UTF-8" \
-  && export LC_COLLATE="en_GB.UTF-8" \
-  && export LC_MONETARY="en_GB.UTF-8" \
-  && export LC_MESSAGES="en_GB.UTF-8" \
-  && export LC_PAPER="en_GB.UTF-8" \
-  && export LC_NAME="en_GB.UTF-8" \
-  && export LC_ADDRESS="en_GB.UTF-8" \
-  && export LC_TELEPHONE="en_GB.UTF-8" \
-  && export LC_MEASUREMENT="en_GB.UTF-8" \
-  && export LC_IDENTIFICATION="en_GB.UTF-8" \
-  && export LC_ALL="en_GB.UTF-8" \
-  && echo 'deb http://http.debian.net/debian sid main' > /etc/apt/sources.list.d/debian-unstable.list \
+RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/debian-unstable.list \
   && apt-get update \
-  && apt-get -qq install -y --no-install-recommends \
+  && apt-get install -y --no-install-recommends \
+    apt-utils \
     sudo \
     wget \
-    sudo \
     curl \
     htop \
     nano \
     file \
     git \
-    libapparmor1 \
+    make \
+    automake \
+    autoconf \
+    texlive-full \
+    libxml2-dev \
     libcurl4-openssl-dev \
-    libedit2 \
     libssl-dev \
+    libcairo2-dev \
+    libudunits2-dev \
+    libgdal-dev \
+    cargo \
+    libv8-3.14-dev \
+    libgit2-dev \
+    libssh2-1-dev \
+    # texlive-full \
+    default-jdk \
+    libmariadb-client-lgpl-dev \
+    libsasl2-dev \
+    libapparmor1 \
+    libedit2 \
     lsb-release \
     psmisc \
-    procps \
     python-setuptools \
-    libudunits2-dev \
+    multiarch-support \
+    ffmpeg \
+    libavfilter-dev \
+    libmagick++-dev \
+    librsvg2-dev \
+    libgsl-dev \
+    build-essential \
     r-base=${R_BASE_VERSION}-* \
     r-base-dev=${R_BASE_VERSION}-* \
-    r-recommended=${R_BASE_VERSION}-* \
-    # libxml2-dev \
-    # libcurl4-openssl-dev \
-    # libssl-dev \
-    # libcairo2-dev \
-    # libgdal-dev \
-    # libv8-3.14-dev \
-    # libgit2-dev \
-    # libssh2-1-dev \
-    # default-jdk \
-    # libmariadb-client-lgpl-dev \
-    # libsasl2-dev \
-    # libapparmor1 \
-    # libedit2 \
-    # lsb-release \
-    # psmisc \
-    # python-setuptools \
-    # multiarch-support \
-    # ffmpeg \
-    # libavfilter-dev \
-  && echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+    r-recommended=${R_BASE_VERSION}-*
 
 
 ### Install rstudio-server
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
-RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb \
+
+RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+  && wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb \
   && dpkg -i libssl1.0.0.deb \
   && rm libssl1.0.0.deb \
   && RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver) \
@@ -116,7 +99,7 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
   \n/usr/sbin/rsyslogd \
   \n \
   \n# start rstudio server \
-  \nrstudio-server start ' > /home/boot.sh 
+  \nrstudio-server start ' > /home/boot.sh
 
 
 ### Install shiny-server
@@ -157,8 +140,30 @@ RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/lib
   # \nchown shiny.shiny /var/log/shiny-server \
   # \n \
   # \nexec shiny-server >> /var/log/shiny-server.log 2>&1'> /home/boot.sh
-  
-  
+
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends locales \
+  && sed -i '/^#.* en_US.* /s/^#//' /etc/locale.gen \
+  && sed -i '/^#.* en_GB.* /s/^#//' /etc/locale.gen \
+  && locale-gen \
+  && export LANG="en_GB.UTF-8" \
+  && export LANGUAGE="en_GB.UTF-8" \
+  && export LC_CTYPE="en_GB.UTF-8" \
+  && export LC_NUMERIC="en_GB.UTF-8" \
+  && export LC_TIME="en_GB.UTF-8" \
+  && export LC_COLLATE="en_GB.UTF-8" \
+  && export LC_MONETARY="en_GB.UTF-8" \
+  && export LC_MESSAGES="en_GB.UTF-8" \
+  && export LC_PAPER="en_GB.UTF-8" \
+  && export LC_NAME="en_GB.UTF-8" \
+  && export LC_ADDRESS="en_GB.UTF-8" \
+  && export LC_TELEPHONE="en_GB.UTF-8" \
+  && export LC_MEASUREMENT="en_GB.UTF-8" \
+  && export LC_IDENTIFICATION="en_GB.UTF-8" \
+  && export LC_ALL="en_GB.UTF-8"
+
+
 RUN echo '\n \
   \n# infinite loop for container never stop \
   \ntail -f /dev/null' >> /home/boot.sh \
@@ -168,9 +173,7 @@ RUN echo '\n \
 ### Install R packages
 COPY packages.R /tmp/packages.R
 
-RUN Rscript /tmp/packages.R \
-  && rm -rf /tmp/*
-
+RUN Rscript /tmp/packages.R && rm -rf /tmp/*
 
 
 EXPOSE 8787

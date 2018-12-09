@@ -6,7 +6,7 @@ utils::install.packages(
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 5),
-  dependencies = TRUE,
+  # dependencies = TRUE,
   configure.args = '--with-udunits2-lib=/usr/local/lib'
 )
 
@@ -15,6 +15,7 @@ utils::install.packages(
 #   pkgs = c('biomaRt', 'snpStats'),
 #   quiet = TRUE, 
 #   Ncpus = min(parallel::detectCores(), 5),
+#   # dependencies = TRUE,
 #   ask = FALSE
 # )
 
