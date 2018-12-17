@@ -4,7 +4,8 @@ USER=$1
 PWD=$2
 ID=$3
 
-useradd -u $ID $USER --home /home/$USER \
+mkdir /home/$USER \
+&& useradd -u $ID $USER --home /home/$USER \
 && echo "$USER:$PWD" | chpasswd \
 && chown -R $USER:staff /home/$USER \
 && addgroup $USER staff \
