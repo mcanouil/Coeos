@@ -68,7 +68,6 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
     libgit2-dev \
     libssh2-1-dev \
     default-jdk \
-    libmariadb-client-lgpl-dev \
     libsasl2-dev \
     libapparmor1 \
     libedit2 \
