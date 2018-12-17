@@ -27,7 +27,36 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
     make \
     automake \
     autoconf \
-    texlive-full \
+    texlive-base \
+    texlive-lang-french \
+    texlive-lang-english \
+    texlive-latex-base \
+    texlive-latex-recommended \
+    texlive-latex-extra \
+    texlive-font-utils \
+    texlive-fonts-recommended \
+    texlive-fonts-extra \
+    texlive-fonts-extra-links \
+    texlive-generic-recommended \
+    texlive-generic-extra \
+    texlive-plain-generic \
+    texlive-plain-extra \
+    # texlive-binaries \
+    # texlive-luatex \
+    # texlive-metapost \
+    # texlive-omega \
+    # texlive-htmlxml \
+    # texlive-pictures \
+    # texlive-xetex \
+    # texlive-extra-utils \
+    # texlive-games \
+    # texlive-humanities \
+    # texlive-music \
+    # texlive-pstricks \
+    # texlive-publishers \
+    # texlive-science \
+    # texlive-bibtex-extra \
+    # texlive-formats-extra \
     libxml2-dev \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -38,7 +67,6 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
     libv8-3.14-dev \
     libgit2-dev \
     libssh2-1-dev \
-    # texlive-full \
     default-jdk \
     libmariadb-client-lgpl-dev \
     libsasl2-dev \
@@ -54,13 +82,14 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
     librsvg2-dev \
     libgsl-dev \
     build-essential \
-    r-base=${R_BASE_VERSION}-* \
-    r-base-dev=${R_BASE_VERSION}-* \
-    r-recommended=${R_BASE_VERSION}-*
+    r-base=${R_BASE_VERSION}* \
+    r-base-dev=${R_BASE_VERSION}* \
+    r-recommended=${R_BASE_VERSION}*
 
 
 ### Install rstudio-server
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
+
 
 RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
   && wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb \
