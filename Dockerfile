@@ -32,14 +32,14 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
     texlive-latex-base \
     texlive-latex-recommended \
     texlive-latex-extra \
-    texlive-font-utils \
-    texlive-fonts-recommended \
-    texlive-fonts-extra \
-    texlive-fonts-extra-links \
-    texlive-generic-recommended \
-    texlive-generic-extra \
-    texlive-plain-generic \
-    texlive-plain-extra \
+    # texlive-font-utils \
+    # texlive-fonts-recommended \
+    # texlive-fonts-extra \
+    # texlive-fonts-extra-links \
+    # texlive-generic-recommended \
+    # texlive-generic-extra \
+    # texlive-plain-generic \
+    # texlive-plain-extra \
     # texlive-binaries \
     # texlive-luatex \
     # texlive-metapost \
@@ -82,7 +82,8 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
     build-essential \
     r-base=${R_BASE_VERSION}* \
     r-base-dev=${R_BASE_VERSION}* \
-    r-recommended=${R_BASE_VERSION}*
+    r-recommended=${R_BASE_VERSION}* \
+  && rm -rf /var/lib/apt/lists/*
 
 
 ### Install rstudio-server
