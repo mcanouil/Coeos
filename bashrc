@@ -33,7 +33,7 @@ export EDITOR=/usr/bin/nano
 export BLOCKSIZE=1k
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export LS_OPTIONS='--color=auto'
-eval "`dircolors`"
+# eval "`dircolors`"
 
 
 alias cp='cp -iv'                           # Nouvelle copie

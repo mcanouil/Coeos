@@ -8,7 +8,6 @@ ENV SHINY_VERSION=1.5.9.923
 
 COPY login.html /etc/rstudio/login.html
 COPY logo.png /usr/lib/rstudio-server/www/images/logo.png
-COPY add_user.sh /home/add_user.sh
 COPY bashrc /etc/bash.bashrc
 
 
@@ -204,7 +203,13 @@ COPY packages.R /tmp/packages.R
 RUN Rscript /tmp/packages.R && rm -rf /tmp/*
 
 
+### Add default user
+COPY add_user.sh /home/add_user.sh
+
+RUN sh /home/add_user.sh coeos coeos 2705
+
+
 EXPOSE 8787
 
 
-CMD ["sh /home/boot.sh"]
+CMD ["/bin/sh", "/home/boot.sh"]
