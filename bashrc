@@ -27,8 +27,8 @@ alias gss="git status"
 alias cp="cp -iv"                           # Nouvelle copie
 alias mv="mv -iv"                           # Nouveau move
 alias mkdir="mkdir -pv"                     # Nouvelle création de dossier
-alias ll="ls -FGlAhp --color=auto"               # Affiche fichier, dossier, et fichiers cachés
-alias l="ls -FGlhp --color=auto"                 # Affiche fichier et dossier
+alias ll="ls -FGlAhp --color=auto"          # Affiche fichier, dossier, et fichiers cachés
+alias l="ls -FGlhp --color=auto"            # Affiche fichier et dossier
 alias ls="ls --color=auto" 
 cd() { builtin cd "$@"; ll; }               # Changement de dossier
 alias cd..="cd ../"                         # Retour en arrière rapide
@@ -39,49 +39,9 @@ alias .4="cd ../../../../"                  # Retour rapide 4 niveaux
 alias .5="cd ../../../../../"               # Retour rapide 5 niveaux
 alias .6="cd ../../../../../../"
 
-# alias ll="ls -alF"
-
 export PS1="________________________________________________________________________________\n| \w @ \h (\u) \n| => "
 export PS2="| => "
 
 export EDITOR=/usr/bin/nano
 export BLOCKSIZE=1k
 export LSCOLORS=ExFxBxDxCxegedabagacad
-
-
-#### Set ssh agent with key for every VM at startup
-env=~/.ssh/agent_$(hostname).env
-
-agent_is_running() {
-  if [ "$SSH_AUTH_SOCK" ]; then
-    ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
-  else
-    false
-  fi
-}
-
-agent_has_keys() {
-  ssh-add -l >/dev/null 2>&1
-}
-
-agent_load_env() {
-  . "$env" >/dev/null
-}
-
-agent_start() {
-  (umask 077; ssh-agent >"$env")
-  . "$env" >/dev/null
-}
-
-if ! agent_is_running; then
-  agent_load_env
-fi
-
-if ! agent_is_running; then
-  agent_start
-  ssh-add ~/.ssh/egid
-elif ! agent_has_keys; then
-  ssh-add ~/.ssh/egid
-fi
-
-unset env
