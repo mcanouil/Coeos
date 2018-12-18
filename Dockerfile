@@ -123,9 +123,6 @@ RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/R
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
   && echo '#!/bin/bash \
   \n \
-  \n# start rsyslog server \
-  \n/usr/sbin/rsyslogd \
-  \n \
   \n# start rstudio server \
   \nrstudio-server start ' > /home/boot.sh
 
