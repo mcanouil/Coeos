@@ -6,11 +6,6 @@ ENV RSTUDIO_VERSION=1.1.463
 ENV SHINY_VERSION=1.5.9.923
 
 
-COPY login.html /etc/rstudio/login.html
-COPY logo.png /usr/lib/rstudio-server/www/images/logo.png
-COPY bashrc /etc/bash.bashrc
-
-
 ### Install linux libraries
 RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/debian-unstable.list \
   && apt-get update \
@@ -163,13 +158,18 @@ COPY packages.R /tmp/packages.R
 RUN Rscript /tmp/packages.R && rm -rf /tmp/*
 
 
-### Add default user
+### Copy files
+COPY login.html /etc/rstudio/login.html
+COPY logo.png /usr/lib/rstudio-server/www/images/logo.png
+COPY wallpaper.png /usr/lib/rstudio-server/www/images/wallpaper.png
+COPY bashrc /etc/bash.bashrc
 COPY add_user.sh /home/add_user.sh
 
+### Add default user
 RUN sh /home/add_user.sh coeos coeos 2705
 
 
 EXPOSE 8787
 
 
-CMD ["/bin/sh /home/boot.sh"]
+CMD ["/bin/sh", "/home/boot.sh"]
