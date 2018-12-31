@@ -166,10 +166,10 @@ COPY bashrc /etc/bash.bashrc
 COPY add_user.sh /home/add_user.sh
 
 ### Add default user
-RUN sh /home/add_user.sh coeos coeos 2705 \
-  && git clone https://github.com/mcanouil/IMDbRating.git /home/coeos/IMDbRating \
-  && git clone https://github.com/mcanouil/DEV.git /home/coeos/DEV \
-  && git clone https://github.com/mcanouil/PRESENTATION.git /home/coeos/PRESENTATION
+RUN sh /home/add_user.sh coeos coeos 2705
+# && git clone https://github.com/mcanouil/IMDbRating.git /home/coeos/IMDbRating \
+# && git clone https://github.com/mcanouil/DEV.git /home/coeos/DEV \
+# && git clone https://github.com/mcanouil/PRESENTATION.git /home/coeos/PRESENTATION 
 
 
 EXPOSE 8787
