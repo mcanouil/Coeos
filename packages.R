@@ -3,7 +3,7 @@ utils::install.packages(
     'udunits2', 'units', 'devtools', 'tidyverse', 'shiny', 'readxl', 'writexl', 
     'qdap', 'Hmisc', 'kableExtra', 'ggrepel', 'ggpubr', 'styler', 'conflicted', 
     'benchr', 'gifski', 'DT', 'bookdown', 'av', 'remotes', 'pryr', 'roxygen2',
-    'png', 'caTools'
+    'png', 'caTools', 'ggraph'
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 5),
