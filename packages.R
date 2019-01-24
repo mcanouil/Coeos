@@ -3,7 +3,7 @@ utils::install.packages(
     'udunits2', 'units', 'devtools', 'tidyverse', 'shiny', 'readxl', 'writexl', 
     'qdap', 'Hmisc', 'kableExtra', 'ggrepel', 'ggpubr', 'styler', 'conflicted', 
     'benchr', 'gifski', 'DT', 'bookdown', 'av', 'remotes', 'pryr', 'roxygen2',
-    'png', 'caTools', 'ggraph'
+    'png', 'caTools', 'ggraph', 'tweenr', 'transformr', 'gganimate'
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 5),
@@ -22,6 +22,3 @@ utils::install.packages(
 
 remotes::install_github(repo = "gabraham/flashpca/flashpcaR", quiet = TRUE)
 remotes::install_github(repo = "dreamRs/prefixer", quiet = TRUE)
-remotes::install_github(repo = "thomasp85/tweenr", quiet = TRUE)
-remotes::install_github(repo = "thomasp85/transformr", quiet = TRUE)
-remotes::install_github(repo = "thomasp85/gganimate", quiet = TRUE)

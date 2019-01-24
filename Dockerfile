@@ -1,9 +1,8 @@
 FROM library/debian
 
+
 ENV R_BASE_VERSION=3.5.2
-ENV BIOCONDUCTOR_VERSION=3.8
 ENV RSTUDIO_VERSION=1.1.463
-ENV SHINY_VERSION=1.5.9.923
 
 
 ### Install linux libraries
@@ -28,9 +27,12 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
   && export LC_MEASUREMENT="en_GB.UTF-8" \
   && export LC_IDENTIFICATION="en_GB.UTF-8" \
   && export LC_ALL="en_GB.UTF-8"
-  
+
+
 ENV LC_ALL en_GB.UTF-8
+ENV LANGUAGE=en_GB.UTF-8
 ENV LANG en_GB.UTF-8
+
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
