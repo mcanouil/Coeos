@@ -29,9 +29,9 @@ RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/
   && export LC_ALL="en_GB.UTF-8"
 
 
-ENV LC_ALL en_GB.UTF-8
+ENV LC_ALL=en_GB.UTF-8
 ENV LANGUAGE=en_GB.UTF-8
-ENV LANG en_GB.UTF-8
+ENV LANG=en_GB.UTF-8
 
 
 RUN apt-get update \
