@@ -168,7 +168,7 @@ COPY bashrc /etc/bash.bashrc
 COPY add_user.sh /home/add_user.sh
 
 
-RUN git config --system core.sharedRepository 0664
+RUN git config --system core.sharedRepository 0774
 RUN git config --system credential.helper 'cache --timeout=3600'
 
 ### Add default user
