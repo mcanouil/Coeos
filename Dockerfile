@@ -53,30 +53,30 @@ RUN apt-get update \
     texlive-latex-base \
     texlive-latex-recommended \
     texlive-latex-extra \
-    # texlive-font-utils \
-    # texlive-fonts-recommended \
-    # texlive-fonts-extra \
-    # texlive-fonts-extra-links \
-    # texlive-generic-recommended \
-    # texlive-generic-extra \
-    # texlive-plain-generic \
-    # texlive-plain-extra \
-    # texlive-binaries \
-    # texlive-luatex \
-    # texlive-metapost \
-    # texlive-omega \
-    # texlive-htmlxml \
-    # texlive-pictures \
-    # texlive-xetex \
-    # texlive-extra-utils \
-    # texlive-games \
-    # texlive-humanities \
-    # texlive-music \
-    # texlive-pstricks \
-    # texlive-publishers \
-    # texlive-science \
-    # texlive-bibtex-extra \
-    # texlive-formats-extra \
+    texlive-font-utils \
+    texlive-fonts-recommended \
+    texlive-fonts-extra \
+    texlive-fonts-extra-links \
+    texlive-generic-recommended \
+    texlive-generic-extra \
+    texlive-plain-generic \
+    texlive-plain-extra \
+    texlive-binaries \
+    texlive-luatex \
+    texlive-metapost \
+    texlive-omega \
+    texlive-htmlxml \
+    texlive-pictures \
+    texlive-xetex \
+    texlive-extra-utils \
+    texlive-games \
+    texlive-humanities \
+    texlive-music \
+    texlive-pstricks \
+    texlive-publishers \
+    texlive-science \
+    texlive-bibtex-extra \
+    texlive-formats-extra \
     libxml2-dev \
     libcurl4-openssl-dev \
     libssl-dev \
