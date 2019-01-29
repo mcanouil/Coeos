@@ -179,7 +179,7 @@ RUN sh /home/add_user.sh coeos coeos 2705
 ### Add xkcd
 RUN git clone https://github.com/ipython/xkcd-font.git /usr/share/fonts/xkcd-font \
   && fc-cache -f -v \
-  && Rscript -e 'utils::install.packages(pkgs = "showtext", quiet = TRUE)' \
+  && Rscript -e 'utils::install.packages(pkgs = c("showtext", "xkcd"), quiet = TRUE)' \
   && Rscript -e 'sysfonts::font_add("xkcd", "xkcd.otf")' \
   && Rscript -e 'sysfonts::font_add("xkcd_regular", "xkcd-Regular.otf")' \
   && Rscript -e 'sysfonts::font_add("xkcd_script", "xkcd-script.ttf")'
