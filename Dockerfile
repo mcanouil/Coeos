@@ -174,10 +174,15 @@ RUN git config --system credential.helper 'cache --timeout=3600'
 
 ### Add default user
 RUN sh /home/add_user.sh coeos coeos 2705
-# && git clone https://github.com/mcanouil/IMDbRating.git /home/coeos/IMDbRating \
-# && git clone https://github.com/mcanouil/DEV.git /home/coeos/DEV \
-# && git clone https://github.com/mcanouil/PRESENTATION.git /home/coeos/PRESENTATION 
 
+
+### Add xkcd
+RUN git clone https://github.com/ipython/xkcd-font.git /usr/share/fonts/xkcd-font \
+  && fc-cache -f -v \
+  && Rscript -e 'utils::install.packages(pkgs = "showtext", quiet = TRUE)' \
+  && Rscript -e 'sysfonts::font_add("xkcd", "xkcd.otf")' \
+  && Rscript -e 'sysfonts::font_add("xkcd_regular", "xkcd-Regular.otf")' \
+  && Rscript -e 'sysfonts::font_add("xkcd_script", "xkcd-script.ttf")'
 
 
 EXPOSE 8787
