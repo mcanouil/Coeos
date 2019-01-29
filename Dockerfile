@@ -47,6 +47,31 @@ RUN apt-get update \
     make \
     automake \
     autoconf \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libcairo2-dev \
+    libudunits2-dev \
+    libgdal-dev \
+    cargo \
+    libv8-3.14-dev \
+    libgit2-dev \
+    libssh2-1-dev \
+    default-jdk \
+    libsasl2-dev \
+    libapparmor1 \
+    libedit2 \
+    lsb-release \
+    psmisc \
+    python-setuptools \
+    multiarch-support \
+    ffmpeg \
+    libavfilter-dev \
+    libmagick++-dev \
+    librsvg2-dev \
+    libgsl-dev \
+    build-essential \
+  && apt-get install -y \
     texlive-base \
     texlive-lang-french \
     texlive-lang-english \
@@ -77,30 +102,6 @@ RUN apt-get update \
     texlive-science \
     texlive-bibtex-extra \
     texlive-formats-extra \
-    libxml2-dev \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libcairo2-dev \
-    libudunits2-dev \
-    libgdal-dev \
-    cargo \
-    libv8-3.14-dev \
-    libgit2-dev \
-    libssh2-1-dev \
-    default-jdk \
-    libsasl2-dev \
-    libapparmor1 \
-    libedit2 \
-    lsb-release \
-    psmisc \
-    python-setuptools \
-    multiarch-support \
-    ffmpeg \
-    libavfilter-dev \
-    libmagick++-dev \
-    librsvg2-dev \
-    libgsl-dev \
-    build-essential \
   && apt-get install -t unstable -y --no-install-recommends \
     r-base=${R_BASE_VERSION}* \
     r-base-dev=${R_BASE_VERSION}* \
