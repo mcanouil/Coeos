@@ -171,6 +171,8 @@ COPY add_user.sh /home/add_user.sh
 
 RUN git config --system core.sharedRepository 0774
 RUN git config --system credential.helper 'cache --timeout=3600'
+RUN git config --system core.editor "nano -w"
+RUN git config --system color.ui auto
 
 ### Add default user
 RUN sh /home/add_user.sh coeos coeos 2705
