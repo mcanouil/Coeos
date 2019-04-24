@@ -4,7 +4,7 @@ utils::install.packages(
     "qdap", "Hmisc", "kableExtra", "ggrepel", "ggpubr", "styler", "conflicted", 
     "benchr", "gifski", "DT", "bookdown", "av", "remotes", "pryr", "roxygen2",
     "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
-    "future"
+    "future", "usethis", "covr"
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 5),
