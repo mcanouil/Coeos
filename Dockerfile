@@ -1,8 +1,8 @@
 FROM library/debian
 
 
-ENV R_BASE_VERSION=3.5.3
-ENV RSTUDIO_VERSION=1.1.463
+ENV R_BASE_VERSION=3.6.0
+ENV RSTUDIO_VERSION==1.2.1335
 
 
 ### Install linux libraries
@@ -156,6 +156,7 @@ RUN echo '\n \
   
   
 ### Install R packages
+ENV R_LIBS_SITE="/usr/lib/R/library"
 COPY packages.R /tmp/packages.R
 
 RUN Rscript /tmp/packages.R && rm -rf /tmp/*

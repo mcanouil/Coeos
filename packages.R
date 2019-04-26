@@ -2,9 +2,9 @@ utils::install.packages(
   pkgs = c(
     "udunits2", "units", "devtools", "tidyverse", "shiny", "readxl", "writexl", 
     "qdap", "Hmisc", "kableExtra", "ggrepel", "ggpubr", "styler", "conflicted", 
-    "benchr", "gifski", "DT", "bookdown", "av", "remotes", "pryr", "roxygen2",
+    "benchr", "gifski", "bookdown", "av", "remotes", "pryr", "roxygen2",
     "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
-    "future", "usethis", "covr"
+    "future", "usethis", "covr", "reprex", "rvg", "png"
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 5),
@@ -23,3 +23,5 @@ utils::install.packages(
 
 remotes::install_github(repo = "gabraham/flashpca/flashpcaR", quiet = TRUE)
 remotes::install_github(repo = "dreamRs/prefixer", quiet = TRUE)
+remotes::install_github(repo = "rstudio/gt", quiet = FALSE)
+
