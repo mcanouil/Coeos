@@ -4,10 +4,10 @@ utils::install.packages(
     "qdap", "Hmisc", "kableExtra", "ggrepel", "ggpubr", "styler", "conflicted", 
     "benchr", "gifski", "bookdown", "av", "remotes", "pryr", "roxygen2",
     "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
-    "future", "usethis", "covr", "reprex", "rvg", "png"
+    "future", "usethis", "covr", "reprex", "rvg", "png", "vitae"
   ), 
   quiet = TRUE, 
-  Ncpus = min(parallel::detectCores(), 5),
+  Ncpus = min(parallel::detectCores(), 20),
   # dependencies = TRUE,
   configure.args = "--with-udunits2-lib=/usr/local/lib"
 )
@@ -21,7 +21,7 @@ utils::install.packages(
 #   ask = FALSE
 # )
 
-remotes::install_github(repo = "gabraham/flashpca/flashpcaR", quiet = TRUE)
+# remotes::install_github(repo = "gabraham/flashpca/flashpcaR", quiet = TRUE)
 remotes::install_github(repo = "dreamRs/prefixer", quiet = TRUE)
-remotes::install_github(repo = "rstudio/gt", quiet = FALSE)
+remotes::install_github(repo = "rstudio/gt", quiet = TRUE)
 
