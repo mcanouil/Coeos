@@ -271,11 +271,6 @@ RUN apt-get update \
   && addgroup rstudio-server staff \
   && usermod -g staff rstudio-server \
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-  && echo '#!/bin/bash \
-          \n \
-          \n# start rstudio server \
-          \nrstudio-server start ' \
-    > /home/boot.sh \
   ## Clean up from R source install
   && cd / \
   && rm -rf /tmp/* \
@@ -283,10 +278,14 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && apt-get autoclean -y \
   && rm -rf /var/lib/apt/lists/* \ 
-  && echo '\n \
+  && echo '#!/bin/bash \
+          \n \
+          \n# start rstudio server \
+          \nrstudio-server start \
+          \n \
           \n# infinite loop for container never stop \
           \ntail -f /dev/null' \
-    >> /home/boot.sh
+    > /home/boot.sh
 
 
 ### Add xkcd
