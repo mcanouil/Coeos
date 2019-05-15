@@ -295,7 +295,7 @@ RUN git clone https://github.com/ipython/xkcd-font.git /usr/share/fonts/xkcd-fon
   && Rscript -e 'sysfonts::font_add("xkcd", "xkcd.otf")' \
   && Rscript -e 'sysfonts::font_add("xkcd_regular", "xkcd-Regular.otf")' \
   && Rscript -e 'sysfonts::font_add("xkcd_script", "xkcd-script.ttf")'
-
+  
 
 EXPOSE 8787
 
