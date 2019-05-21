@@ -2,9 +2,10 @@ utils::install.packages(
   pkgs = c(
     "udunits2", "units", "devtools", "tidyverse", "shiny", "readxl", "writexl", 
     "qdap", "Hmisc", "kableExtra", "ggrepel", "ggpubr", "styler", "conflicted", 
-    "benchr", "gifski", "bookdown", "av", "remotes", "pryr", "roxygen2",
+    "benchr", "gifski", "av", "remotes", "pryr", "roxygen2",
     "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
-    "future", "usethis", "covr", "reprex", "rvg", "png", "vitae"
+    "future", "usethis", "covr", "reprex", "rvg", "png", 
+    "bookdown", "pagedown", "blogdown", "pkgdown"
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 20),
