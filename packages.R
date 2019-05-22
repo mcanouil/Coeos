@@ -26,3 +26,6 @@ utils::install.packages(
 remotes::install_github(repo = "dreamRs/prefixer", quiet = TRUE)
 remotes::install_github(repo = "rstudio/gt", quiet = TRUE)
 remotes::install_github("metacran/cranlogs", quiet = TRUE)
+
+# install HUGO to use blogdown
+blogdown::install_hugo() 
