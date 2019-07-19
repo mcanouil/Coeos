@@ -1,4 +1,4 @@
-FROM library/debian
+FROM library/debian:stretch
 
 
 ENV R_VERSION=3.6.0
@@ -144,6 +144,7 @@ RUN apt-get install -y --no-install-recommends \
     python-setuptools \
     sudo \
     wget \
+    xclip \
   ## R packages
   && apt-get install -y --no-install-recommends \
     libudunits2-dev \
