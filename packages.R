@@ -5,7 +5,7 @@ utils::install.packages(
     "benchr", "gifski", "av", "remotes", "pryr", "roxygen2",
     "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
     "future", "usethis", "covr", "reprex", "rvg", "png", 
-    "bookdown", "pagedown", "blogdown", "pkgdown"
+    "bookdown", "pagedown", "pkgdown"
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 20),
@@ -26,6 +26,3 @@ utils::install.packages(
 remotes::install_github(repo = "dreamRs/prefixer", quiet = TRUE)
 remotes::install_github(repo = "rstudio/gt", quiet = TRUE)
 remotes::install_github("metacran/cranlogs", quiet = TRUE)
-
-# install HUGO to use blogdown
-blogdown::install_hugo() 
