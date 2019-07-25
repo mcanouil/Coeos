@@ -23,6 +23,6 @@ utils::install.packages(
 # )
 
 # remotes::install_github(repo = "gabraham/flashpca/flashpcaR", quiet = TRUE)
-remotes::install_github(repo = "dreamRs/prefixer", quiet = TRUE)
-remotes::install_github(repo = "rstudio/gt", quiet = TRUE)
+remotes::install_github("dreamRs/prefixer", quiet = TRUE)
+remotes::install_github("rstudio/gt", quiet = TRUE)
 remotes::install_github("metacran/cranlogs", quiet = TRUE)
