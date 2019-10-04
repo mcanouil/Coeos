@@ -5,7 +5,7 @@ utils::install.packages(
     "benchr", "gifski", "av", "remotes", "pryr", "roxygen2",
     "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
     "future", "usethis", "covr", "reprex", "rvg", "png", 
-    "bookdown", "pagedown", "pkgdown"
+    "bookdown", "pagedown", "pkgdown", "rhub", "revdepcheck"
   ), 
   quiet = TRUE, 
   Ncpus = min(parallel::detectCores(), 20),
