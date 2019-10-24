@@ -17,7 +17,7 @@ COPY add_user.sh /home/add_user.sh
 COPY packages.R /tmp/packages.R
 
 ### Add default user
-RUN sh /home/add_user.sh Coeos Coeos 2705
+RUN sh /home/add_user.sh Coeos 2705
 
 
 ### Install linux libraries
@@ -158,7 +158,7 @@ RUN apt-get install -y --no-install-recommends \
     pandoc-citeproc \
     qpdf \
   ## git config
-  && git config --system core.sharedRepository 0755 \
+  && git config --system core.sharedRepository 0775 \
   && git config --system credential.helper "cache --timeout=3600" \
   && git config --system core.editor "nano -w" \
   && git config --system color.ui auto \
