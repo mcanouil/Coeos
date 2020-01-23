@@ -1,4 +1,4 @@
-# Coeos
+# Coeos Docker Image <img src="logo.png" align="right" width="120" />
 
 My own Docker image.
 
