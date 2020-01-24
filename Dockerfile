@@ -1,169 +1,224 @@
 FROM library/debian:stretch
 
 
-ENV R_VERSION=3.6.2
-ENV RSTUDIO_VERSION=1.2.5019
-ENV S6_VERSION=v1.21.7.0
-ENV PANDOC_TEMPLATES_VERSION=2.6
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
-
-ENV PATH=/usr/lib/rstudio-server/bin:$PATH
-
-COPY login.html /etc/rstudio/login.html
-COPY logo.png /usr/lib/rstudio-server/www/images/logo.png
-COPY wallpaper.png /usr/lib/rstudio-server/www/images/wallpaper.png
-COPY bashrc /etc/bash.bashrc
-COPY add_user.sh /home/add_user.sh
-COPY packages.R /tmp/packages.R
-
-### Add default user
-RUN sh /home/add_user.sh Coeos 2705
+ENV BUILD_DATE=2020-01-24
+ENV START_RSTUDIO=true
+ENV START_SHINY=false
+ENV START_SSH=false
 
 
-### Install linux libraries
+## Set locales to en_US
 RUN apt-get update \
   && apt-get install -y --no-install-recommends locales \
   && sed -i '/^#.* en_US.* /s/^#//' /etc/locale.gen \
   && sed -i '/^#.* en_GB.* /s/^#//' /etc/locale.gen \
   && locale-gen \
-  && export LANG="en_GB.UTF-8" \
-  && export LANGUAGE="en_GB.UTF-8" \
-  && export LC_CTYPE="en_GB.UTF-8" \
-  && export LC_NUMERIC="en_GB.UTF-8" \
-  && export LC_TIME="en_GB.UTF-8" \
-  && export LC_COLLATE="en_GB.UTF-8" \
-  && export LC_MONETARY="en_GB.UTF-8" \
-  && export LC_MESSAGES="en_GB.UTF-8" \
-  && export LC_PAPER="en_GB.UTF-8" \
-  && export LC_NAME="en_GB.UTF-8" \
-  && export LC_ADDRESS="en_GB.UTF-8" \
-  && export LC_TELEPHONE="en_GB.UTF-8" \
-  && export LC_MEASUREMENT="en_GB.UTF-8" \
-  && export LC_IDENTIFICATION="en_GB.UTF-8" \
-  && export LC_ALL="en_GB.UTF-8" \
-  && /usr/sbin/update-locale LANG=en_GB.UTF-8 \
-  && apt-get install -y --no-install-recommends nano 
+  && export LANG="en_US.UTF-8" \
+  && export LANGUAGE="en_US.UTF-8" \
+  && export LC_CTYPE="en_US.UTF-8" \
+  && export LC_NUMERIC="en_US.UTF-8" \
+  && export LC_TIME="en_US.UTF-8" \
+  && export LC_COLLATE="en_US.UTF-8" \
+  && export LC_MONETARY="en_US.UTF-8" \
+  && export LC_MESSAGES="en_US.UTF-8" \
+  && export LC_PAPER="en_US.UTF-8" \
+  && export LC_NAME="en_US.UTF-8" \
+  && export LC_ADDRESS="en_US.UTF-8" \
+  && export LC_TELEPHONE="en_US.UTF-8" \
+  && export LC_MEASUREMENT="en_US.UTF-8" \
+  && export LC_IDENTIFICATION="en_US.UTF-8" \
+  && export LC_ALL="en_US.UTF-8"
 
-ENV LC_ALL=en_GB.UTF-8
-ENV LANGUAGE=en_GB.UTF-8
-ENV LANG=en_GB.UTF-8
 
-RUN apt-get install -y --no-install-recommends \
-    bash-completion \
-    ca-certificates \
-    file \
-    fonts-texgyre \
-    g++ \
-    gfortran \
-    gsfonts \
-    libblas-dev \
-    libbz2-1.0 \
-    libcurl3 \
-    libicu57 \
-    libjpeg62-turbo \
-    libopenblas-dev \
-    libpangocairo-1.0-0 \
-    libpcre3 \
-    libpng16-16 \
-    libreadline7 \
-    libtiff5 \
-    liblzma5 \
-    locales \
-    make \
-    unzip \
-    zip \
-    zlib1g \
-  ## R additional
-  && BUILDDEPS="curl \
-    default-jdk \
-    libbz2-dev \
-    libcairo2-dev \
-    libcurl4-openssl-dev \
-    libpango1.0-dev \
-    libjpeg-dev \
-    libicu-dev \
-    libpcre3-dev \
-    libpng-dev \
-    libreadline-dev \
-    libtiff5-dev \
-    liblzma-dev \
-    libx11-dev \
-    libxt-dev \
-    perl \
-    tcl8.6-dev \
-    tk8.6-dev \
-    texinfo \
-    x11proto-core-dev \
-    xauth \
-    xfonts-base \
-    xvfb \
-    zlib1g-dev \
-    texlive-base \
-    texlive-lang-french \
-    texlive-lang-english \
-    texlive-latex-base \
-    texlive-latex-recommended \
-    texlive-latex-extra \
-    texlive-font-utils \
-    texlive-fonts-recommended \
-    texlive-fonts-extra \
-    texlive-generic-recommended \
-    texlive-generic-extra \
-    texlive-plain-extra \
-    texlive-binaries \
-    texlive-luatex \
-    texlive-metapost \
-    texlive-omega \
-    texlive-htmlxml \
-    texlive-pictures \
-    texlive-xetex \
-    texlive-extra-utils \
-    texlive-games \
-    texlive-humanities \
-    texlive-music \
-    texlive-pstricks \
-    texlive-publishers \
-    texlive-science \
-    texlive-bibtex-extra \
-    texlive-formats-extra \
-    lmodern" \
-  && apt-get install -y --no-install-recommends $BUILDDEPS \
-  ## Rstudio
+## Set environment variable for version and locales
+ENV R_VERSION=3.6.2
+ENV BIOCONDUCTOR_VERSION=3.10
+ENV SHINY_VERSION=1.5.12.933
+ENV RSTUDIO_VERSION=1.2.5019
+ENV GCTA_VERSION=gcta_1.92.3beta3
+ENV PANDOC_TEMPLATES_VERSION=2.6
+ENV S6_VERSION=v1.21.7.0
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+
+ENV PATH=/usr/lib/rstudio-server/bin:$PATH
+
+ENV LC_ALL=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+
+
+## Install libraries
+RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    file \
-    git \
-    libapparmor1 \
-    curl \
-    tar \
-    libcurl4-openssl-dev \
-    libedit2 \
-    libssl-dev \
-    lsb-release \
-    psmisc \
-    procps \
-    python-setuptools \
-    sudo \
-    wget \
-    xclip \
-  ## R packages
-  && apt-get install -y --no-install-recommends \
-    libudunits2-dev \
-    libxml2-dev \
-    libgdal-dev \
-    cargo \
-    ffmpeg \
-    libavfilter-dev \
-    libmagick++-dev \
-    pandoc \
-    pandoc-citeproc \
-    qpdf \
-  ## git config
-  && git config --system core.sharedRepository 0775 \
+    autoconf \ 
+    automake \ 
+    bash-completion \ 
+    build-essential \ 
+    ca-certificates \ 
+    cargo \ 
+    curl \ 
+    default-jdk \ 
+    fastqtl \ 
+    ffmpeg \ 
+    file \ 
+    fonts-texgyre \ 
+    g++ \ 
+    gdebi \
+    gfortran \ 
+    git \ 
+    gsfonts \ 
+    htop \ 
+    libapparmor1 \ 
+    libavfilter-dev \ 
+    libblas-dev \ 
+    libbz2-1.0 \ 
+    libbz2-dev \ 
+    libcairo2-dev \ 
+    libclang-3.8-dev \ 
+    libclang-common-3.8-dev \ 
+    libclang-dev \ 
+    libclang1-3.8 \ 
+    libcurl4-openssl-dev \ 
+    libedit2 \ 
+    libgc1c2 \ 
+    libgdal-dev \ 
+    libgsl-dev \ 
+    libicu-dev \ 
+    libio-socket-ssl-perl \ 
+    libjpeg-dev \ 
+    libjpeg62-turbo \ 
+    libllvm3.8 \ 
+    liblzma-dev \ 
+    liblzma5 \ 
+    libmagick++-dev \ 
+    libobjc-6-dev \ 
+    libobjc4 \ 
+    libopenblas-dev \ 
+    libpango1.0-dev \ 
+    libpangocairo-1.0-0 \ 
+    libpcre3 \ 
+    libpcre3-dev \ 
+    libpng-dev \ 
+    libpng16-16 \ 
+    libreadline-dev \ 
+    libreadline7 \ 
+    librsvg2-dev \ 
+    libsasl2-dev \ 
+    libssl-dev \ 
+    libtiff5 \ 
+    libtiff5-dev \ 
+    libudunits2-dev \ 
+    libv8-dev \ 
+    libx11-dev \ 
+    libxml2-dev \ 
+    libxt-dev \ 
+    lmodern \ 
+    lsb-release \ 
+    make \ 
+    man-db \ 
+    multiarch-support \ 
+    nano \
+    openssh-client \ 
+    pandoc \ 
+    pandoc-citeproc \ 
+    perl \ 
+    phantomjs \ 
+    plink1.9 \ 
+    procps \ 
+    psmisc \ 
+    python-setuptools \ 
+    qpdf \ 
+    sudo \ 
+    tar \ 
+    tcl8.6-dev \ 
+    texinfo \ 
+    texlive-base \ 
+    texlive-bibtex-extra \ 
+    texlive-font-utils \ 
+    texlive-fonts-extra \ 
+    texlive-fonts-recommended \ 
+    texlive-formats-extra \ 
+    texlive-generic-extra \ 
+    texlive-generic-recommended \ 
+    texlive-lang-english \ 
+    texlive-lang-french \ 
+    texlive-latex-base \ 
+    texlive-latex-extra \ 
+    texlive-latex-recommended \ 
+    texlive-plain-extra \ 
+    tk8.6-dev \ 
+    unzip \ 
+    vcftools \ 
+    wget \ 
+    x11proto-core-dev \ 
+    xauth \ 
+    xclip \ 
+    xfonts-base \ 
+    xtail \
+    xvfb \ 
+    zip \ 
+    zlib1g \ 
+    zlib1g-dev
+
+
+## Install libraries for databases
+RUN apt-get update \
+  && apt-get install -y --install-suggests \
+    tdsodbc \
+    odbc-postgresql \
+    libsqliteodbc \
+    unixodbc \
+    unixodbc-dev \
+  && cd /tmp \
+  && wget https://dev.mysql.com/get/Downloads/Connector-ODBC/8.0/mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit.tar.gz \
+  && tar -xvf mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit.tar.gz \
+  && cd mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit \
+  && cp bin/* /usr/local/bin \
+  && cp lib/* /usr/local/lib \
+  && myodbc-installer -a -d -n "MySQL ODBC 8.0 Driver" -t "Driver=/usr/local/lib/libmyodbc8w.so" \
+  && cd /tmp \
+  && rm -Rf mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit*
+  
+  
+## Install BCFTOOLS
+RUN cd /tmp \
+  && git clone git://github.com/samtools/htslib.git \
+  && cd /tmp/htslib \
+  && autoheader \
+  && autoconf \
+  && ./configure --prefix=/usr \
+  && make \
+  && make install \
+  && cd /tmp \
+  && git clone git://github.com/samtools/bcftools.git \
+  && cd /tmp/bcftools \
+  && autoheader \
+  && autoconf \
+  && ./configure --prefix=/usr \
+  && make \
+  && make install \
+  && cd /tmp \
+  && rm -rf htslib bcftools 
+
+
+## Install gcta
+RUN cd /tmp \
+  && wget http://cnsgenomics.com/software/gcta/bin/${GCTA_VERSION}.zip \
+  && unzip ${GCTA_VERSION}.zip \
+  && cp ${GCTA_VERSION}/gcta64 /usr/bin/ \
+  && rm -rf gcta_*
+
+
+## Configure git
+RUN git config --system core.sharedRepository 0775 \
   && git config --system credential.helper "cache --timeout=3600" \
+  && git config --system push.default simple \
   && git config --system core.editor "nano -w" \
-  && git config --system color.ui auto \
-  && cd tmp/ \
-  ## Download source code
+  && git config --system color.ui auto 
+  
+
+## Install R
+RUN cd /tmp \
   && curl -O https://cran.r-project.org/src/base/R-3/R-${R_VERSION}.tar.gz \
   ## Extract source code
   && tar -zxvf R-${R_VERSION}.tar.gz \
@@ -193,39 +248,30 @@ RUN apt-get install -y --no-install-recommends \
   && make \
   && make install \
   ## Add a default CRAN mirror
-  && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
+  && [ -z "$BUILD_DATE" ] && BUILD_DATE=$(TZ="America/Los_Angeles" date -I) || true \
+  && MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE} \
+  && echo MRAN=$MRAN >> /etc/environment \
+  && export MRAN=$MRAN \
+  && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
+  # && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
   ## Add a library directory (for user-installed packages)
   && mkdir -p /usr/local/lib/R/site-library \
   && chown root:staff /usr/local/lib/R/site-library \
   && chmod g+wx /usr/local/lib/R/site-library \
   ## Fix library path
   && echo "R_LIBS_USER='/usr/local/lib/R/site-library'" >> /usr/local/lib/R/etc/Renviron \
-  && echo "R_LIBS=\${R_LIBS-'/usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib/R/library'}" >> /usr/local/lib/R/etc/Renviron \
-  ## install packages from date-locked MRAN snapshot of CRAN
-  # && [ -z "$BUILD_DATE" ] && BUILD_DATE=$(TZ="America/Los_Angeles" date -I) || true \
-  # && MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE} \
-  # && echo MRAN=$MRAN >> /etc/environment \
-  # && export MRAN=$MRAN \
-  # && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
-  ## Use littler installation scripts
-  # && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$MRAN')" \
-  # && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-  # && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-  # && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
-  ## Install R packages
-  && Rscript /tmp/packages.R 
+  && echo "R_LIBS=\${R_LIBS-'/usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib/R/library'}" >> /usr/local/lib/R/etc/Renviron
+  
+  
+## Install R packages
+COPY packages.R /tmp/packages.R
+RUN Rscript /tmp/packages.R 
 
 
-## Install Rstudio
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends libclang-dev \
-  && wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb \
-  && dpkg -i libssl1.0.0.deb \
-  && rm libssl1.0.0.deb \
-  && RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver) \
-  && [ -z "$RSTUDIO_VERSION" ] && RSTUDIO_VERSION=$RSTUDIO_LATEST || true \
-  && wget -q http://download2.rstudio.org/server/debian9/x86_64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb \
-  && dpkg -i rstudio-server-${RSTUDIO_VERSION}-amd64.deb \
+## Install Rstudio server
+RUN if [ -z "$RSTUDIO_VERSION" ]; then RSTUDIO_URL="https://www.rstudio.org/download/latest/stable/server/debian9_64/rstudio-server-latest-amd64.deb"; else RSTUDIO_URL="http://download2.rstudio.org/server/debian9/x86_64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb"; fi \
+  && wget -q $RSTUDIO_URL \
+  && dpkg -i rstudio-server-*-amd64.deb \
   && rm rstudio-server-*-amd64.deb \
   ## Symlink pandoc & standard pandoc templates for use system-wide
   && ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin \
@@ -234,8 +280,6 @@ RUN apt-get update \
   && mkdir -p /opt/pandoc/templates \
   && cp -r pandoc-templates*/* /opt/pandoc/templates && rm -rf pandoc-templates* \
   && mkdir /root/.pandoc && ln -s /opt/pandoc/templates /root/.pandoc/templates \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/ \
   ## RStudio wants an /etc/R, will populate from $R_HOME/etc
   && mkdir -p /etc/R \
   ## Write config files in $R_HOME/etc
@@ -247,12 +291,6 @@ RUN apt-get update \
     \n  options(httr_oob_default = TRUE) \
     \n}' >> /usr/local/lib/R/etc/Rprofile.site \
   && echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron \
-  #   ## Need to configure non-root user for RStudio
-  #   && useradd rstudio \
-  #   && echo "rstudio:rstudio" | chpasswd \
-  # 	&& mkdir /home/rstudio \
-  # 	&& chown rstudio:rstudio /home/rstudio \
-  # 	&& addgroup rstudio staff \
   ## Prevent rstudio from deciding to use /usr/bin/R if a user apt-get installs a package
   &&  echo 'rsession-which-r=/usr/local/bin/R' >> /etc/rstudio/rserver.conf \
   ## use more robust file locking to avoid errors when using shared volumes:
@@ -263,30 +301,64 @@ RUN apt-get update \
   && mkdir -p /etc/services.d/rstudio \
   && echo '#!/usr/bin/with-contenv bash \
           \n## load /etc/environment vars first: \
-  		    \n for line in $( cat /etc/environment ) ; do export $line ; done \
+  		  \n for line in $( cat /etc/environment ) ; do export $line ; done \
           \n exec /usr/lib/rstudio-server/bin/rserver --server-daemonize 0' \
-    > /etc/services.d/rstudio/run \
+          > /etc/services.d/rstudio/run \
   && echo '#!/bin/bash \
           \n rstudio-server stop' \
-    > /etc/services.d/rstudio/finish \
-  && addgroup rstudio-server staff \
+          > /etc/services.d/rstudio/finish \
   && usermod -g staff rstudio-server \
-  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-  ## Clean up from R source install
-  && cd / \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+
+## Copy UMR logo and custom rstudio homepage
+COPY login_page/login.html /etc/rstudio/login.html
+COPY login_page/wallpaper.png /usr/lib/rstudio-server/www/images/wallpaper.png
+COPY login_page/logo.png /usr/lib/rstudio-server/www/images/logo.png
+
+
+## Instal Shiny server
+RUN wget --no-verbose "https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-$SHINY_VERSION-amd64.deb" -O ss-latest.deb \
+  && gdebi -n ss-latest.deb \
+  && rm -f version.txt ss-latest.deb \
+  && . /etc/environment \
+  && cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ \
+  && usermod -g staff shiny \
+  && usermod -a -G shiny shiny \
+  && chown shiny:staff /var/lib/shiny-server  \
+  && echo '### set locales \
+    \nexport LANG="en_US.UTF-8" \
+    \nexport LANGUAGE="en_US.UTF-8" \
+    \nexport LC_CTYPE="en_US.UTF-8" \
+    \nexport LC_NUMERIC="en_US.UTF-8" \
+    \nexport LC_TIME="en_US.UTF-8" \
+    \nexport LC_COLLATE="en_US.UTF-8" \
+    \nexport LC_MONETARY="en_US.UTF-8" \
+    \nexport LC_MESSAGES="en_US.UTF-8" \
+    \nexport LC_PAPER="en_US.UTF-8" \
+    \nexport LC_NAME="en_US.UTF-8" \
+    \nexport LC_ADDRESS="en_US.UTF-8" \
+    \nexport LC_TELEPHONE="en_US.UTF-8" \
+    \nexport LC_MEASUREMENT="en_US.UTF-8" \
+    \nexport LC_IDENTIFICATION="en_US.UTF-8" \
+    \nexport LC_ALL="en_US.UTF-8"' > /home/shiny/.bashrc \
+  && mkdir -p /var/log/shiny-server \
+  && chown shiny:staff /var/log/shiny-server
+
+
+## Add SSH server
+RUN apt-get update \
+  && apt-get install -y openssh-server \
+  && mkdir -p /var/run/sshd
+
+
+## Clean up install
+RUN cd / \
   && rm -rf /tmp/* \
-  && apt-get remove --purge -y $BUILDDEPS \
   && apt-get autoremove -y \
   && apt-get autoclean -y \
-  && rm -rf /var/lib/apt/lists/* \ 
-  && echo '#!/bin/bash \
-          \n \
-          \n# start rstudio server \
-          \nrstudio-server start \
-          \n \
-          \n# infinite loop for container never stop \
-          \ntail -f /dev/null' \
-    > /home/boot.sh
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/
 
 
 ### Add xkcd
@@ -298,7 +370,34 @@ RUN git clone https://github.com/ipython/xkcd-font.git /usr/share/fonts/xkcd-fon
   && Rscript -e 'sysfonts::font_add("xkcd_script", "xkcd-script.ttf")'
   
 
-EXPOSE 8787
+### Add user 
+ENV USER=Coeos
+
+RUN useradd \
+  --uid 2705 \
+  --create-home \
+  --home /home/${USER} \
+  --no-user-group \
+  --gid staff \
+  --groups staff,root,sudo \
+  ${USER} \
+  && echo "${USER}:${USER}" | chpasswd \
+  && mkdir -p /home/${USER}/.rstudio/monitored/user-settings
+
+COPY home_config/.Rprofile /home/${USER}/.Rprofile
+COPY home_config/.bash_profile /home/${USER}/.bash_profile
+COPY home_config/.bashrc /home/${USER}/.bashrc
+COPY home_config/user-settings /home/${USER}/.rstudio/monitored/user-settings/user-settings
+
+RUN chown -R ${USER}:Staff /home/${USER}
 
 
-CMD ["/bin/sh", "/home/boot.sh"]
+## Bash startup script
+COPY boot.sh /home/boot.sh
+RUN chmod 755 /home/boot.sh
+
+
+EXPOSE 8787 3838 22
+
+
+CMD ["/bin/bash", "/home/boot.sh"]

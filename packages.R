@@ -1,28 +1,51 @@
 utils::install.packages(
   pkgs = c(
-    "udunits2", "units", "devtools", "tidyverse", "shiny", "readxl", "writexl", 
-    "qdap", "Hmisc", "kableExtra", "ggrepel", "ggpubr", "styler", "conflicted", 
-    "benchr", "gifski", "av", "remotes", "pryr", "roxygen2",
-    "png", "caTools", "ggraph", "tweenr", "transformr", "gganimate", "ggforce",
-    "future", "usethis", "covr", "reprex", "rvg", "png", 
-    "bookdown", "pagedown", "pkgdown"
-  ), 
-  quiet = TRUE, 
-  Ncpus = min(parallel::detectCores(), 20),
+    "udunits2", 
+    "units", 
+    "devtools", 
+    "tidyverse", 
+    "shiny", 
+    "readxl", 
+    "writexl", 
+    "qdap", 
+    "Hmisc", 
+    "kableExtra",
+    "ggrepel", 
+    "ggpubr", 
+    "styler", 
+    "conflicted", 
+    "benchr",
+    "gifski", 
+    "av", 
+    "remotes", 
+    "pryr", 
+    "roxygen2",
+    "png", 
+    "caTools", 
+    "ggraph", 
+    "tweenr", 
+    "transformr", 
+    "gganimate", 
+    "ggforce",
+    "future", 
+    "usethis", 
+    "covr", 
+    "reprex", 
+    "rvg", 
+    "png", 
+    "bookdown", 
+    "pagedown", 
+    "pkgdown"
+  ),
   # dependencies = TRUE,
+  quiet = FALSE, 
+  Ncpus = min(parallel::detectCores(), 20),
+  ask = FALSE,
+  clean = TRUE,
+  update = FALSE,
   configure.args = "--with-udunits2-lib=/usr/local/lib"
 )
 
-# BiocManager::install(ask = FALSE, version = Sys.getenv("BIOCONDUCTOR_VERSION"))
-# BiocManager::install(
-#   pkgs = c("biomaRt", "snpStats"),
-#   quiet = TRUE, 
-#   Ncpus = min(parallel::detectCores(), 5),
-#   # dependencies = TRUE,
-#   ask = FALSE
-# )
-
-# remotes::install_github(repo = "gabraham/flashpca/flashpcaR", quiet = TRUE)
 remotes::install_github("dreamRs/prefixer", quiet = TRUE)
 remotes::install_github("rstudio/gt", quiet = TRUE)
 remotes::install_github("metacran/cranlogs", quiet = TRUE)
