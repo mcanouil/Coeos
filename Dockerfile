@@ -389,7 +389,7 @@ COPY home_config/.bash_profile /home/${USER}/.bash_profile
 COPY home_config/.bashrc /home/${USER}/.bashrc
 COPY home_config/user-settings /home/${USER}/.rstudio/monitored/user-settings/user-settings
 
-RUN chown -R ${USER}:Staff /home/${USER}
+RUN chown -R ${USER}:staff /home/${USER}
 
 
 ## Bash startup script
