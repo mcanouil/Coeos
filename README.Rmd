@@ -1,17 +1,22 @@
+---
+output: github_document
+---
 
 # Coeos Docker Image <img src="login_page/logo.png" align="right" width="120" />
 
-  - BUILD\_DATE: `2020-01-24`  
-  - R: `v3.6.2`  
-  - BIOCONDUCTOR: `v3.10`  
-  - SHINY: `v1.5.12.933`  
-  - RSTUDIO: `v1.2.5019`
+```{r, results = "asis", echo = FALSE}
+cat(
+  gsub("ENV (.*)=(.*)", "* \\1: `\\2`  ", readLines("Dockerfile", n = 4)[4]),
+  gsub("ENV (.*)_VERSION=(.*)", "* \\1: `v\\2`  ", readLines("Dockerfile", n = 37)[34:37]), 
+  sep = "\n"
+)
+```
 
 ## Build Docker image
 
 ### Development
 
-``` bash
+```{bash, eval = FALSE}
 docker build --tag mcanouil/coeos:dev --compress
 
 docker push mcanouil/coeos:dev
@@ -19,7 +24,7 @@ docker push mcanouil/coeos:dev
 
 ### Stable
 
-``` bash
+```{bash, eval = FALSE}
 R_VERSION=362
 
 docker tag mcanouil/coeos:dev mcanouil/coeos:${R_VERSION} \
@@ -31,7 +36,7 @@ docker tag mcanouil/coeos:${R_VERSION} mcanouil/coeos:latest \
 
 ### Run Docker container
 
-``` bash
+```{bash, eval = FALSE}
 docker run \
   --name coeos \
   --hostname tartarus \
