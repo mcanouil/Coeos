@@ -31,11 +31,10 @@ RUN apt-get update \
 
 
 ## Set environment variable for version and locales
-ENV R_VERSION=3.6.2
+ENV R_VERSION=3.6.3
 ENV BIOCONDUCTOR_VERSION=3.10
-ENV SHINY_VERSION=1.5.12.933
-ENV RSTUDIO_VERSION=1.2.5019
-ENV GCTA_VERSION=gcta_1.92.3beta3
+ENV SHINY_VERSION=1.5.13.944
+ENV RSTUDIO_VERSION=1.2.5033
 ENV PANDOC_TEMPLATES_VERSION=2.6
 ENV S6_VERSION=v1.21.7.0
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
@@ -162,53 +161,24 @@ RUN apt-get update \
 
 
 ## Install libraries for databases
-RUN apt-get update \
-  && apt-get install -y --install-suggests \
-    tdsodbc \
-    odbc-postgresql \
-    libsqliteodbc \
-    unixodbc \
-    unixodbc-dev \
-  && cd /tmp \
-  && wget https://dev.mysql.com/get/Downloads/Connector-ODBC/8.0/mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit.tar.gz \
-  && tar -xvf mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit.tar.gz \
-  && cd mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit \
-  && cp bin/* /usr/local/bin \
-  && cp lib/* /usr/local/lib \
-  && myodbc-installer -a -d -n "MySQL ODBC 8.0 Driver" -t "Driver=/usr/local/lib/libmyodbc8w.so" \
-  && cd /tmp \
-  && rm -Rf mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit*
+# RUN apt-get update \
+#   && apt-get install -y --install-suggests \
+#     tdsodbc \
+#     odbc-postgresql \
+#     libsqliteodbc \
+#     unixodbc \
+#     unixodbc-dev \
+#   && cd /tmp \
+#   && wget https://dev.mysql.com/get/Downloads/Connector-ODBC/8.0/mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit.tar.gz \
+#   && tar -xvf mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit.tar.gz \
+#   && cd mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit \
+#   && cp bin/* /usr/local/bin \
+#   && cp lib/* /usr/local/lib \
+#   && myodbc-installer -a -d -n "MySQL ODBC 8.0 Driver" -t "Driver=/usr/local/lib/libmyodbc8w.so" \
+#   && cd /tmp \
+#   && rm -Rf mysql-connector-odbc-8.0.13-linux-debian9-x86-64bit*
   
   
-## Install BCFTOOLS
-RUN cd /tmp \
-  && git clone git://github.com/samtools/htslib.git \
-  && cd /tmp/htslib \
-  && autoheader \
-  && autoconf \
-  && ./configure --prefix=/usr \
-  && make \
-  && make install \
-  && cd /tmp \
-  && git clone git://github.com/samtools/bcftools.git \
-  && cd /tmp/bcftools \
-  && autoheader \
-  && autoconf \
-  && ./configure --prefix=/usr \
-  && make \
-  && make install \
-  && cd /tmp \
-  && rm -rf htslib bcftools 
-
-
-## Install gcta
-RUN cd /tmp \
-  && wget http://cnsgenomics.com/software/gcta/bin/${GCTA_VERSION}.zip \
-  && unzip ${GCTA_VERSION}.zip \
-  && cp ${GCTA_VERSION}/gcta64 /usr/bin/ \
-  && rm -rf gcta_*
-
-
 ## Configure git
 RUN git config --system core.sharedRepository 0775 \
   && git config --system credential.helper "cache --timeout=3600" \
@@ -386,7 +356,6 @@ RUN useradd \
 
 COPY home_config/.Rprofile /home/${USER}/.Rprofile
 COPY home_config/.bash_profile /home/${USER}/.bash_profile
-COPY home_config/.bashrc /home/${USER}/.bashrc
 COPY home_config/user-settings /home/${USER}/.rstudio/monitored/user-settings/user-settings
 
 RUN chown -R ${USER}:staff /home/${USER}
